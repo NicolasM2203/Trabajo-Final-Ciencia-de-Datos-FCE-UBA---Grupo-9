@@ -9,7 +9,7 @@ limpiar_nombres <- function(df) {
   nombres_nuevos <- names(df) %>%
     str_to_lower() %>%                    # Todo minúsculas
     str_replace_all("[^a-zA-Z0-9_]", "_") %>%  # Solo letras, números y _
-    str_replace_all("_{2,}", "_") %>%     # Eliminar _ múltiples
+    str_replace_all("_{2,}", "_")     # Eliminar _ múltiples
   
   names(df) <- nombres_nuevos
   return(df)
