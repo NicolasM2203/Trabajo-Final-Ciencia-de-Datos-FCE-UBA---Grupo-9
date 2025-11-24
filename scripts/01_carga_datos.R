@@ -7,14 +7,13 @@
 # El script es autocontenido y usa rutas relativas. [3]
 # ==============================================================================
 
-# 1. Configuración de dependencias (Autocontención)
-# Cargamos librerías necesarias para rutas y lectura de archivos.
-library(here) # Para utilizar rutas relativas desde la raíz del proyecto. [3]
-library(readr) # Librería eficiente para leer archivos CSV.
+# 1. Configuración de dependencias (Utilizo el archivo global con las pre-configuraciones)
+library(here)
+source(here("config", "global.R"))
 
 # 2. Definición de Rutas
-ruta_export <- here("data", "raw", "prod_export.csv") 
-ruta_potencial <- here("data", "raw", "prod_potencial.csv") 
+ruta_export    <- file.path(dir_data_raw, "prod_export.csv") #definimos las rutas especificas de los csv a partir de la variable de carpeta ya creada
+ruta_potencial <- file.path(dir_data_raw, "prod_potencial.csv")
 
 # 3. Ejecución de la Carga de Datos (Utilizando la Función estándar para cargar datos) [2]
 
@@ -34,5 +33,13 @@ cat("\n--- Base de Potencial Productivo (prod_pontecial) ---",
     "\nFuente:", ruta_potencial,
     "\nDimensiones:", nrow(df_prod_potencial), "filas x", ncol(df_prod_potencial), "columnas\n")
 
-# 4. Finalización
+# 4. Guardado Temporal (Para que el script 02 los pueda usar)
+# Guardamos en formato .rds (rápido y liviano) en la carpeta processed
+mensaje_proceso("Guardando archivos intermedios para el siguiente script...")
+
+saveRDS(df_prod_export, file.path(dir_data_processed,"df_prod_export_processed.rds"))
+saveRDS(df_prod_potencial, file.path(dir_data_processed, "df_prod_potencial_processed.rds"))
+
+# 5. Finalización
 print("¡Carga de bases de datos de complejidad económica completada!")
+mensaje_exito("¡Carga de bases de datos de complejidad económica completada!")

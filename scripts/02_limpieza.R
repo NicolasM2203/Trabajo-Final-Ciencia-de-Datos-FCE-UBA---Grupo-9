@@ -5,7 +5,10 @@
 # El script es autocontenido y usa rutas relativas. [3]
 # ==============================================================================
 
-library(dplyr) 
+# 1. Configuración de dependencias (Utilizo el archivo global con las pre-configuraciones)
+library(here)
+source(here("config", "global.R"))
+
 
 #3. Aplicación de la limpieza
 
