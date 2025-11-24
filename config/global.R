@@ -58,4 +58,19 @@ mensaje_proceso <- function(texto) {
   cat("🔄", texto, "...\n")
 }
 
+# 6. Cargar Funciones Personalizadas ------------------------------------------
+# Busca todos los archivos .R dentro de la carpeta functions
+archivos_funciones <- list.files(path = dir_functions, 
+                                 pattern = "\\.R$", 
+                                 full.names = TRUE)
+
+# Los lee uno por uno (hace source)
+if(length(archivos_funciones) > 0) {
+  walk(archivos_funciones, source)
+  mensaje_exito("Funciones personalizadas cargadas correctamente")
+} else {
+  mensaje_proceso("No se encontraron scripts de funciones para cargar.")
+}
+
+
 mensaje_exito("Configuración cargada correctamente")
